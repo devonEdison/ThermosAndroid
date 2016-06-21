@@ -74,32 +74,7 @@ public class TestActivity extends AppCompatActivity {
             public void onEvent(DiscoveryEvent e) {
 //                Log.i(TAG, "onEvent A =  " + e);
                 Log.i(TAG, "onEvent Aname =  " + e.device().getName_debug());
-
                 mList.add(e.device().getName_debug());
-
-//              if( e.was(BleManager.DiscoveryListener.LifeCycle.DISCOVERED) ) {
-//                  e.device().connect(new BleDevice.StateListener() {
-//                      @Override
-//                      public void onEvent(StateEvent e) {
-//                          Log.i(TAG, "connect =  " + e);
-//                          scanString = scanString + "connect: " + e +" \n\n\n\n";
-//                          scanText.setText(scanString);
-//
-//                          if( e.didEnter(BleDeviceState.INITIALIZED) ) {
-//                              e.device().read(Uuids.BATTERY_LEVEL, new BleDevice.ReadWriteListener() {
-//                                  @Override
-//                                  public void onEvent(ReadWriteEvent e) {
-//                                      if(e.wasSuccess()){
-//                                          Log.i("", "Battery level is " + e.data_byte() + "%");
-//                                          scanString = scanString + "readbattery state: " + e.data_byte() + "%" +" \n";
-//                                          scanText.setText(scanString);
-//                                      }
-//                                  }
-//                              });
-//                          }
-//                      }
-//                  });
-//              }
             }
         };
 
