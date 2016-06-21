@@ -1,7 +1,6 @@
 package com.domain.thermosandroid;
 
-import android.content.Context;
-import android.content.SharedPreferences;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -19,15 +18,15 @@ import com.idevicesinc.sweetblue.utils.BluetoothEnabler;
 import java.util.ArrayList;
 
 public class TestActivity extends AppCompatActivity {
-
     private static final String TAG = "TestActivity";
     String scanString = "scan";
     public BleManager m_bleManager;
-    SharedPreferences prefs;
+//    SharedPreferences prefs;
     ListView mListView;
     ArrayList<String> mList;
     ArrayAdapter<String> arrayAdapter;
     ProgressBar mProgressBar;
+    public static String EXTRA_MESSAGE="extramessage";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +37,12 @@ public class TestActivity extends AppCompatActivity {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                Intent intent = new Intent(TestActivity.this, DisplayMessageActivity1.class);
+                intent.putExtra(EXTRA_MESSAGE, mList.get(0));
+                startActivity(intent);
             }
         });
-
-        prefs = this.getSharedPreferences("ThermosWITS", Context.MODE_PRIVATE);
+//        prefs = this.getSharedPreferences("ThermosWITS", Context.MODE_PRIVATE);
         mList = new ArrayList<String>();
         mList.clear();
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
@@ -57,10 +57,8 @@ public class TestActivity extends AppCompatActivity {
         final BleManagerConfig.ScanFilter scanFilter = new BleManagerConfig.ScanFilter() {
             @Override
             public Please onEvent(BleManagerConfig.ScanFilter.ScanEvent e) {
-                Log.i(TAG, "1111111111111111" + e);
                 return BleManagerConfig.ScanFilter.Please.acknowledgeIf(e.name_normalized().contains("thermos"));
 //                        .thenStopScan();
-
                 //thermos_34C7
                 //thermos_053B
             }
@@ -128,7 +126,7 @@ public class TestActivity extends AppCompatActivity {
                         mListView.setAdapter(arrayAdapter);
                         mProgressBar.setVisibility(View.GONE);
                     }
-                }, 5000);
+                }, 10000);
 
                 return super.onEvent(e);
             }
